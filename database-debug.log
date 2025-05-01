@@ -1,3 +1,7 @@
 20:06:41.731 [NamespaceSystem-akka.actor.default-dispatcher-5] INFO akka.event.slf4j.Slf4jLogger - Slf4jLogger started
 20:06:41.867 [main] INFO com.firebase.server.forge.App$ - Listening at 127.0.0.1:9000
 20:28:23.508 [NamespaceSystem-akka.actor.default-dispatcher-9] INFO com.firebase.core.namespace.NamespaceActor - winter-f3cb5 successfully activated FBKV (SurveyIdle(0)) wait: 344ms, init: 0ms
+01:32:58.353 [Thread-0] INFO com.firebase.server.forge.App$ - Attempting graceful shutdown.
+01:32:58.360 [NamespaceSystem-akka.actor.default-dispatcher-19] INFO com.firebase.core.namespace.Terminator$Terminator - 1 actors left to terminate: winter-f3cb5
+01:32:58.363 [NamespaceSystem-akka.actor.default-dispatcher-17] INFO com.firebase.core.namespace.NamespaceActor - stopped namespace actor for winter-f3cb5
+01:32:58.366 [Thread-0] INFO com.firebase.server.forge.App$ - Graceful shutdown complete.

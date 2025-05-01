@@ -14,9 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: {
-	  default: "Chat UM"
-  },
+  title: "Chat UM",
   description: "A Chat application build as an assignment from Unified Mentor",
 };
 

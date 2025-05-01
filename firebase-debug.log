@@ -1,0 +1,126 @@
+[debug] [2025-05-01T20:04:25.183Z] ----------------------------------------------------------------------
+[debug] [2025-05-01T20:04:25.185Z] Command:       /home/autumn/.nvm/versions/node/v22.13.0/bin/node /home/autumn/.nvm/versions/node/v22.13.0/bin/firebase deploy
+[debug] [2025-05-01T20:04:25.185Z] CLI Version:   14.2.2
+[debug] [2025-05-01T20:04:25.185Z] Platform:      linux
+[debug] [2025-05-01T20:04:25.185Z] Node Version:  v22.13.0
+[debug] [2025-05-01T20:04:25.185Z] Time:          Fri May 02 2025 01:34:25 GMT+0530 (India Standard Time)
+[debug] [2025-05-01T20:04:25.185Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2025-05-01T20:04:25.351Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-05-01T20:04:25.352Z] > authorizing via signed-in user (wintersunset95@gmail.com)
+[debug] [2025-05-01T20:04:25.352Z] [iam] checking project winter-f3cb5 for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get","firebasehosting.sites.update","firebaserules.releases.create","firebaserules.releases.update","firebaserules.rulesets.create"]
+[debug] [2025-05-01T20:04:25.352Z] Checked if tokens are valid: true, expires at: 1746133367216
+[debug] [2025-05-01T20:04:25.352Z] Checked if tokens are valid: true, expires at: 1746133367216
+[debug] [2025-05-01T20:04:25.353Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/winter-f3cb5:testIamPermissions [none]
+[debug] [2025-05-01T20:04:25.353Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/winter-f3cb5:testIamPermissions x-goog-quota-user=projects/winter-f3cb5
+[debug] [2025-05-01T20:04:25.353Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/winter-f3cb5:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get","firebasehosting.sites.update","firebaserules.releases.create","firebaserules.releases.update","firebaserules.rulesets.create"]}
+[debug] [2025-05-01T20:04:27.960Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/winter-f3cb5:testIamPermissions 200
+[debug] [2025-05-01T20:04:27.960Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/winter-f3cb5:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get","firebasehosting.sites.update","firebaserules.releases.create","firebaserules.releases.update","firebaserules.rulesets.create"]}
+[debug] [2025-05-01T20:04:27.961Z] Checked if tokens are valid: true, expires at: 1746133367216
+[debug] [2025-05-01T20:04:27.961Z] Checked if tokens are valid: true, expires at: 1746133367216
+[debug] [2025-05-01T20:04:27.961Z] >>> [apiv2][query] POST https://iam.googleapis.com/v1/projects/winter-f3cb5/serviceAccounts/winter-f3cb5@appspot.gserviceaccount.com:testIamPermissions [none]
+[debug] [2025-05-01T20:04:27.961Z] >>> [apiv2][body] POST https://iam.googleapis.com/v1/projects/winter-f3cb5/serviceAccounts/winter-f3cb5@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[debug] [2025-05-01T20:04:30.274Z] <<< [apiv2][status] POST https://iam.googleapis.com/v1/projects/winter-f3cb5/serviceAccounts/winter-f3cb5@appspot.gserviceaccount.com:testIamPermissions 200
+[debug] [2025-05-01T20:04:30.274Z] <<< [apiv2][body] POST https://iam.googleapis.com/v1/projects/winter-f3cb5/serviceAccounts/winter-f3cb5@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[debug] [2025-05-01T20:04:30.274Z] Checked if tokens are valid: true, expires at: 1746133367216
+[debug] [2025-05-01T20:04:30.274Z] Checked if tokens are valid: true, expires at: 1746133367216
+[debug] [2025-05-01T20:04:30.275Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/winter-f3cb5 [none]
+[debug] [2025-05-01T20:04:31.234Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/winter-f3cb5 200
+[debug] [2025-05-01T20:04:31.235Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/winter-f3cb5 {"projectId":"winter-f3cb5","projectNumber":"548025054656","displayName":"Winter","name":"projects/winter-f3cb5","resources":{"hostingSite":"winter-f3cb5"},"state":"ACTIVE","etag":"1_3bbe0fbc-229d-4781-b399-5a16be998d0c"}
+[debug] [2025-05-01T20:04:31.921Z] Checked if tokens are valid: true, expires at: 1746133367216
+[debug] [2025-05-01T20:04:31.921Z] Checked if tokens are valid: true, expires at: 1746133367216
+[debug] [2025-05-01T20:04:31.921Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/winter-f3cb5/sites pageToken=&pageSize=10
+[debug] [2025-05-01T20:04:33.302Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/winter-f3cb5/sites 200
+[debug] [2025-05-01T20:04:33.302Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/winter-f3cb5/sites {"sites":[{"name":"projects/winter-f3cb5/sites/winter-f3cb5","defaultUrl":"https://winter-f3cb5.web.app","appId":"1:548025054656:web:75cdd9a42eb0bdac58c425","type":"DEFAULT_SITE"}]}
+[debug] [2025-05-01T20:04:33.302Z] Checked if tokens are valid: true, expires at: 1746133367216
+[debug] [2025-05-01T20:04:33.303Z] Checked if tokens are valid: true, expires at: 1746133367216
+[debug] [2025-05-01T20:04:33.303Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/-/webApps/1:548025054656:web:75cdd9a42eb0bdac58c425/config [none]
+[debug] [2025-05-01T20:04:34.301Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/-/webApps/1:548025054656:web:75cdd9a42eb0bdac58c425/config 200
+[debug] [2025-05-01T20:04:34.301Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/-/webApps/1:548025054656:web:75cdd9a42eb0bdac58c425/config {"projectId":"winter-f3cb5","appId":"1:548025054656:web:75cdd9a42eb0bdac58c425","storageBucket":"winter-f3cb5.firebasestorage.app","apiKey":"AIzaSyACD4MQSbXmqLy8-msGB_L3fgryCISmgM4","authDomain":"winter-f3cb5.firebaseapp.com","messagingSenderId":"548025054656","measurementId":"G-NMT1CZHNGK"}
+[info] 
+   Thank you for trying our early preview of Next.js support on Firebase Hosting.
+   During the preview, support is best-effort and breaking changes can be expected. Proceed with caution.
+   The integration is known to work with Next.js version 12 - 15.0. You may encounter errors.
+
+   Documentation: https://firebase.google.com/docs/hosting/frameworks/nextjs
+   File a bug: https://github.com/firebase/firebase-tools/issues/new?template=bug_report.md
+   Submit a feature request: https://github.com/firebase/firebase-tools/issues/new?template=feature_request.md
+
+   We'd love to learn from you. Express your interest in helping us shape the future of Firebase Hosting: https://goo.gle/41enW5X
+
+[debug] [2025-05-01T20:04:36.012Z] Checked if tokens are valid: true, expires at: 1746133367216
+[debug] [2025-05-01T20:04:36.012Z] Checked if tokens are valid: true, expires at: 1746133367216
+[debug] [2025-05-01T20:04:36.012Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/winter-f3cb5/sites/winter-f3cb5 [none]
+[debug] [2025-05-01T20:04:36.552Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/winter-f3cb5/sites/winter-f3cb5 200
+[debug] [2025-05-01T20:04:36.552Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/winter-f3cb5/sites/winter-f3cb5 {"name":"projects/winter-f3cb5/sites/winter-f3cb5","defaultUrl":"https://winter-f3cb5.web.app","appId":"1:548025054656:web:75cdd9a42eb0bdac58c425","type":"DEFAULT_SITE"}
+[info]    ▲ Next.js 15.3.1
+
+[info] 
+
+[info]    Creating an optimized production build ...
+
+[info]  ✓ Compiled successfully in 11.0s
+
+[info]    Linting and checking validity of types ...
+
+[info] 
+Failed to compile.
+
+./src/app/chat/[userId]/page.tsx
+2:8  Error: 'Nav' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/login/page.tsx
+7:10  Error: 'connectAuthEmulator' is defined but never used.  @typescript-eslint/no-unused-vars
+20:8  Error: 'emailSignIn' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+25:8  Error: 'result' is never reassigned. Use 'const' instead.  prefer-const
+31:19  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+47:5  Warning: React Hook useEffect has missing dependencies: 'auth' and 'router'. Either include them or remove the dependency array.  react-hooks/exhaustive-deps
+62:29  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+82:29  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+
+./src/app/page.tsx
+2:8  Error: 'Image' is defined but never used.  @typescript-eslint/no-unused-vars
+7:22  Error: 'getDoc' is defined but never used.  @typescript-eslint/no-unused-vars
+13:8  Error: 'users' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+15:8  Error: 'auth' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+29:5  Warning: React Hook useEffect has a missing dependency: 'db'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/app/profile/page.tsx
+35:4  Warning: React Hook useEffect has missing dependencies: 'auth.currentUser', 'auth.tenantId', 'db', and 'router'. Either include them or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/app/signup/page.tsx
+6:10  Error: 'Tabs' is defined but never used.  @typescript-eslint/no-unused-vars
+6:16  Error: 'TabsContent' is defined but never used.  @typescript-eslint/no-unused-vars
+6:29  Error: 'TabsList' is defined but never used.  @typescript-eslint/no-unused-vars
+6:39  Error: 'TabsTrigger' is defined but never used.  @typescript-eslint/no-unused-vars
+8:10  Error: 'connectAuthEmulator' is defined but never used.  @typescript-eslint/no-unused-vars
+20:8  Error: 'emailSignIn' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+25:8  Error: 'result' is never reassigned. Use 'const' instead.  prefer-const
+31:19  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+47:5  Warning: React Hook useEffect has missing dependencies: 'auth' and 'router'. Either include them or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/components/DirectMessage.tsx
+4:94  Error: 'where' is defined but never used.  @typescript-eslint/no-unused-vars
+6:21  Error: 'useRef' is defined but never used.  @typescript-eslint/no-unused-vars
+62:5  Warning: React Hook useEffect has missing dependencies: 'auth.currentUser', 'auth.tenantId', 'db', 'router', and 'userId'. Either include them or remove the dependency array.  react-hooks/exhaustive-deps
+71:9  Error: 'messagesDocRef' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+115:5  Warning: React Hook useEffect has missing dependencies: 'auth.tenantId' and 'db'. Either include them or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/components/Nav.tsx
+2:10  Error: 'connectAuthEmulator' is defined but never used.  @typescript-eslint/no-unused-vars
+21:29  Error: 'user' is defined but never used.  @typescript-eslint/no-unused-vars
+24:5  Warning: React Hook useEffect has missing dependencies: 'auth' and 'db'. Either include them or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/lib/firebase.ts
+3:10  Error: 'getAnalytics' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/lib/types.ts
+26:6  Error: 'Room' is defined but never used.  @typescript-eslint/no-unused-vars
+38:6  Error: 'DM' is defined but never used.  @typescript-eslint/no-unused-vars
+47:6  Error: 'Presence' is defined but never used.  @typescript-eslint/no-unused-vars
+
+info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/app/api-reference/config/eslint#disabling-rules
+
+[debug] [2025-05-01T20:04:58.261Z] Error: ENOENT: no such file or directory, open '/home/autumn/Desktop/UMAM/chat-um/.next/export-marker.json'
+[error] 
+[error] Error: An unexpected error has occurred.
