@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from "react"
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { generateCombinedUid } from "@/lib/helpers";
+import DmNav from "./DmNav";
 
 export default function DirectMessage({
 	userId,
@@ -30,7 +31,7 @@ export default function DirectMessage({
 			return;
 		}
 
-		console.log(auth.tenantId, auth.currentUser.displayName);
+		console.log(tenantId, auth.currentUser.displayName);
 		const usersCollection = collection(db, "tenants", auth.tenantId as string, "users");
 		const myUserRef = doc(usersCollection, auth.currentUser.uid as string);
 		const userRef = doc(usersCollection, userId);
@@ -132,23 +133,36 @@ export default function DirectMessage({
 		.catch((error) => {
 			console.log(error);
 		})
+	}
 
+	if (!myUser || !user) {
+		return <div>Loading...</div>
 	}
 
 	return (
-		<div className="w-full flex-1 overflow-auto grid grid-cols-1 grid-rows-12">
-			<ul className="col-span-1 row-span-11 flex flex-col-reverse overflow-y-scroll gap-2">
-				{messages.map((message) => (
-					<li key={message.timestamp}>
-						<p>{message.senderName}</p>
-						<p>{message.content}</p>
-					</li>
-				))}
-			</ul>
-			<form className="col-span-1 row-span-1 flex flex-row gap-2 mb-5" onSubmit={handleSubmit}>
-				<Input type="text" placeholder="Send message" className="w-full" value={text} onChange={(e) => setText(e.target.value)} />
-				<Button type="submit">Send</Button>
-			</form>
+		<div className="h-full max-h-dvh w-full flex flex-col p-2">
+			<DmNav me={myUser} them={user} />
+			<div className="w-full flex-1 overflow-auto grid grid-cols-1 grid-rows-12 gap-2">
+				<ul className="col-span-1 row-span-11 flex flex-col-reverse overflow-y-scroll gap-4">
+					{messages.map((message) => (
+						<li key={message.timestamp}
+							className={`p-2
+								rounded-sm
+								max-w-[80%]
+								${message.senderId === myUser.uid ? "self-end" : "self-start"}
+								${message.senderId === myUser.uid ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"}
+							`}
+						>
+							<p className="font-bold text-xl">{message.senderName}</p>
+							<p>{message.content}</p>
+						</li>
+					))}
+				</ul>
+				<form className="col-span-1 row-span-1 flex flex-row gap-2 mb-5" onSubmit={handleSubmit}>
+					<Input type="text" placeholder="Send message" className="w-full" value={text} onChange={(e) => setText(e.target.value)} />
+					<Button type="submit">Send</Button>
+				</form>
+			</div>
 		</div>
 	)
 }

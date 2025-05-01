@@ -10,10 +10,7 @@ export default async function Chat ({
 	const { userId } = await params;
 
 	return (
-		<div className="h-full max-h-dvh w-full flex flex-col">
-			<Nav chatId={userId} />
-			<DirectMessage userId={userId} />
-		</div>
+		<DirectMessage userId={userId} />
 	)
 }
 

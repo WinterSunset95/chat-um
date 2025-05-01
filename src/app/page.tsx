@@ -29,7 +29,7 @@ export default function Home() {
 	}, [])
 
 	return (
-		<div className="h-full w-full">
+		<div className="h-full w-full flex flex-col gap-2 p-4">
 			<Nav />
 			<UserList users={usersList} />
 		</div>
