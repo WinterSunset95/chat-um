@@ -33,7 +33,7 @@ export default function RootLayout({
 			defaultTheme="system"
 			enableSystem
 		>
-			<div className="h-full w-full max-w-[1200px]">
+			<div className="h-full w-full max-w-[1200px] flex justify-center items-center">
 				{children}
 			</div>
 		</ThemeProvider>

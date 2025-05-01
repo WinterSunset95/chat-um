@@ -9,8 +9,8 @@ export default function DmNav({ me, them }: { me: User, them: User }) {
 	const theme = useTheme();
 
 	return (
-		<nav className="p-2 flex flex-row justify-between gap-2">
-			<div className="flex flex-row gap-2 grow">
+		<nav className="p-2 flex flex-row justify-between gap-2 items-center">
+			<div className="flex flex-row gap-2 grow items-center">
 				<Avatar>
 					<AvatarImage src={them.photoURL ? them.photoURL : "https://picsum.photos/200"} />
 				</Avatar>

@@ -20,6 +20,8 @@ const firebaseConfig = {
 
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);
-connectAuthEmulator(getAuth(app), "http://localhost:9099");
-connectFirestoreEmulator(getFirestore(app), "localhost", 8080);
+if (process.env.NODE_ENV === "development") {
+	connectAuthEmulator(getAuth(app), "http://localhost:9099");
+	connectFirestoreEmulator(getFirestore(app), "localhost", 8080);
+}
 //export const analytics = getAnalytics(app);

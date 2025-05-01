@@ -4,7 +4,7 @@ import Nav from "@/components/Nav";
 import { mockUsersList } from "@/lib/mock";
 import UserList from "@/components/UserList";
 import { getAuth } from "firebase/auth";
-import { collection, getDoc, getDocs, getFirestore } from "firebase/firestore";
+import { collection, getDoc, getDocs, getFirestore, onSnapshot, query } from "firebase/firestore";
 import { app } from "@/lib/firebase";
 import { useEffect, useState } from "react";
 
@@ -26,6 +26,19 @@ export default function Home() {
 				setUsersList((prev) => [...prev, doc.data() as User]);
 			})
 		})
+
+		const q = query(usersCollection);
+
+		const unsub = onSnapshot(q, (snapshot) => {
+			setUsersList([]);
+			snapshot.forEach((doc) => {
+				setUsersList((prev) => [...prev, doc.data() as User]);
+			})
+		});
+
+		return () => {
+			unsub();
+		}
 	}, [])
 
 	return (

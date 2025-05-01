@@ -26,7 +26,7 @@ export default function DirectMessage({
 
 	useEffect(() => {
 		const tenantId = auth.tenantId;
-		if (!auth.currentUser && !tenantId) {
+		if (!auth.currentUser || !tenantId) {
 			router.replace("/login");
 			return;
 		}
