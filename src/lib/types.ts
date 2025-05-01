@@ -5,6 +5,7 @@ type User = {
 	displayName: string;
 	photoURL?: string;
 	email?: string;
+	phoneNumber?: string;
 	status?: 'online' | 'offline' | 'away';
 	createdAt: number;
 	updatedAt: number;
