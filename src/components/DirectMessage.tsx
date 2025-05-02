@@ -128,7 +128,7 @@ export default function DirectMessage({
 
 	return (
 		<div className="h-full max-h-dvh w-full flex flex-col p-2">
-			<DmNav me={myUser} them={user} />
+			<DmNav them={user} />
 			<div className="w-full flex-1 overflow-auto grid grid-cols-1 grid-rows-12 gap-2">
 				<ul className="col-span-1 row-span-11 flex flex-col-reverse overflow-y-scroll gap-4">
 					{messages.map((message) => (
