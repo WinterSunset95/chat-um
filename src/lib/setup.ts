@@ -2,7 +2,9 @@ import { Auth } from "firebase/auth";
 import { collection, doc, Firestore, getDoc, setDoc } from "firebase/firestore";
 
 // Check if the collection exists based on the schema we have in types.ts
+// Update: Switched to a firebase function
 export const checkFirestore = async (auth: Auth, db: Firestore) => {
+	return;
 	const tenantId = auth.tenantId;
 	if (!tenantId) {
 		return false;
@@ -25,7 +27,9 @@ export const checkFirestore = async (auth: Auth, db: Firestore) => {
 }
 
 // Check if the user exists on the database
+// Update: Switched to a firebase function
 export const checkIfUserExistsOnDatabase = async (auth: Auth, db: Firestore) => {
+	return;
 	const tenantId = auth.tenantId;
 	if (!tenantId) {
 		return false;

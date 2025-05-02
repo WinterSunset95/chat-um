@@ -4,6 +4,7 @@ import { Button } from "./ui/button";
 import { Link, Moon, Sun } from "lucide-react";
 import { Avatar, AvatarImage } from "./ui/avatar";
 import { useAuth } from "./AuthProvider";
+import { User } from "firebase/auth";
 
 export default function DmNav({ them }: { them: User }) {
 

@@ -17,7 +17,7 @@ export default function Nav({ chatId }: { chatId?: string }) {
 	const theme = useTheme();
 
 	return (
-		<nav className="p-2 flex flex-row justify-between gap-2">
+		<nav className="w-full p-2 flex flex-row justify-between gap-2">
 			<h1 className="text-2xl grow">{chatId ? chatId : "Chat@UnifiedMentor" }</h1>
 
 			<Button onClick={() => {

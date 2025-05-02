@@ -1,8 +1,9 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
+import { getApp, initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { connectAuthEmulator, getAuth } from "firebase/auth";
 import { connectFirestoreEmulator, getFirestore } from "firebase/firestore";
+import { connectFunctionsEmulator, getFunctions } from "firebase/functions";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -22,7 +23,10 @@ const firebaseConfig = {
 export const app = initializeApp(firebaseConfig);
 getAuth(app).tenantId = "chat-um-bhulo";
 if (process.env.NODE_ENV === "development") {
-	//connectAuthEmulator(getAuth(app), "http://localhost:9099");
-	//connectFirestoreEmulator(getFirestore(app), "localhost", 8080);
+	connectAuthEmulator(getAuth(app), "http://localhost:9099");
+	connectFirestoreEmulator(getFirestore(app), "localhost", 8080);
+	const functions = getFunctions(getApp());
+	connectFunctionsEmulator(functions, "localhost", 5001);
 }
+
 //export const analytics = getAnalytics(app);
