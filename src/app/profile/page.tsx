@@ -6,18 +6,20 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { app } from "@/lib/firebase";
-import { getAuth } from "firebase/auth";
-import { collection, doc, getDoc, getFirestore } from "firebase/firestore";
+import { getAuth, updateProfile } from "firebase/auth";
+import { collection, doc, getDoc, getFirestore, setDoc, updateDoc } from "firebase/firestore";
 import { CameraIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { FormEvent } from "react";
 
 const Profile: React.FC = () => {
 
-	const db = getFirestore(app);
+	const auth = getAuth(app);
 	const router = useRouter();
 	const user = useAuth();
+	const db = getFirestore(app);
 
-	if (!user || !user.displayName) {
+	if (!user) {
 		router.replace("/login");
 		return (
 			<div>Loading . . .</div>
@@ -25,33 +27,66 @@ const Profile: React.FC = () => {
 	}
 
 	const deleteFlow = () => {
-		getAuth(app).currentUser.delete();
+		auth.currentUser.delete();
+	}
+
+	const handleForm = async (e: FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		const formData = new FormData(e.currentTarget);
+		const newName = formData.get("displayName") as string;
+		if (!newName) {
+			alert("Please enter a display name");
+			return;
+		}
+		await updateProfile(user, {
+			displayName: newName
+		})
+		.then(() => {
+			// Update the firestore entry
+			const collectionRef = collection(db, "tenants", user.tenantId, "users");
+			const userDocRef = doc(collectionRef, user.uid);
+			updateDoc(userDocRef, { displayName: newName })
+			.then(() => {
+				alert("Profile updated");
+				console.log("Profile updated");
+			})
+			.catch((error) => {
+				console.log(error);
+			})
+		})
+		.catch((error) => {
+			console.log(error);
+		})
 	}
 
 	return (
 		<div className="h-full w-full flex flex-col gap-8 p-4 items-center">
 			<Nav />
 			<div className="flex flex-col gap-4 justify-center items-center w-full max-w-96">
-				<div className="w-48 h-48 flex justify-center items-center rounded-full overflow-hidden relative">
-					<img src={user.photoURL ? user.photoURL : "https://picsum.photos/200"} className="w-full h-full object-cover" alt="" />
-					<div className="absolute w-full h-1/3 bottom-0 bg-gradient-to-t from-black to-[rgba(0,0,0,0.5)] flex justify-center items-center">
-						<CameraIcon className="transition-all hover:scale-150 cursor-pointer" color="white" />
+				<form className="flex flex-col gap-4 w-full items-center" onSubmit={handleForm}>
+					<div className="w-48 h-48 flex justify-center items-center rounded-full overflow-hidden relative">
+						<img src={user.photoURL ? user.photoURL : "https://picsum.photos/200"} className="w-full h-full object-cover" alt="" />
+						<div className="absolute w-full h-1/3 bottom-0 bg-gradient-to-t from-black to-[rgba(0,0,0,0.5)] flex justify-center items-center">
+							<CameraIcon className="transition-all hover:scale-150 cursor-pointer" color="white" />
+						</div>
 					</div>
-				</div>
-				<div className="w-full flex flex-col gap-2">
-					<Label>User ID</Label>
-					<Input defaultValue={user.uid} readOnly/>
-				</div>
-				<div className="w-full flex flex-col gap-2">
-					<Label>Username</Label>
-					<Input defaultValue={user.displayName} readOnly/>
-				</div>
-				<div className="w-full flex flex-col gap-2">
-					<Label>Username</Label>
-					<Input defaultValue={user.email} readOnly/>
-				</div>
+					<div className="w-full flex flex-col gap-2">
+						<Label>User ID</Label>
+						<Input defaultValue={user.uid} readOnly disabled/>
+					</div>
+					<div className="w-full flex flex-col gap-2">
+						<Label>Username</Label>
+						<Input name="displayName" defaultValue={user.displayName} />
+					</div>
+					<div className="w-full flex flex-col gap-2">
+						<Label>Username</Label>
+						<Input defaultValue={user.email} readOnly disabled/>
+					</div>
+					<Button className="self-start" type="submit">Update</Button>
+				</form>
+				<br />
 				<div className="w-full flex flex-row gap-2 justify-center items-center">
-					<Button onClick={() => getAuth(app).signOut()} className="grow cursor-pointer" >Logout</Button>
+					<Button onClick={() => auth.signOut()} className="grow cursor-pointer" >Logout</Button>
 					<AlertDialog>
 						<AlertDialogTrigger asChild>
 							<Button variant="destructive" className="grow cursor-pointer">Delete</Button>

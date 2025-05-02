@@ -4,8 +4,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { app } from "@/lib/firebase";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { connectAuthEmulator, getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithPopup } from "firebase/auth";
-import React, { useEffect } from "react";
+import { connectAuthEmulator, getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import React, { FormEvent, useEffect } from "react";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
@@ -18,7 +18,30 @@ const Login: React.FC = () => {
 
 	const router = useRouter();
 
-	const emailSignIn = async () => {
+	const formHandle = async (e: FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		const formData = new FormData(e.currentTarget);
+		const email = formData.get("email") as string;
+		const password = formData.get("password") as string;
+
+		if (!email || !password) {
+			alert("Please enter email and password");
+			return;
+		}
+
+		try {
+			let result = await signInWithEmailAndPassword(auth, email, password);
+
+			if (result.user) {
+				alert("Sign in successful");
+			} else {
+				alert("Sign in failed");
+			}
+		} catch (error: any) {
+			console.log(error);
+			console.log(error.code);
+			alert("Sign in failed: " + error.code);
+		}
 	}
 
 	const popUpSignin = async () => {
@@ -42,11 +65,11 @@ const Login: React.FC = () => {
 
 	return (
 		<main className="w-full max-w-96">
-			<form className="w-full">
+			<form className="w-full" onSubmit={formHandle}>
 				<Tabs defaultValue="email" className="w-full">
 					<TabsList className="grid w-full grid-cols-2">
 						<TabsTrigger value="email">Email</TabsTrigger>
-						<TabsTrigger value="phone">Phone</TabsTrigger>
+						<TabsTrigger value="phone" disabled>Phone</TabsTrigger>
 					</TabsList>
 
 					<TabsContent value="email">
@@ -58,11 +81,11 @@ const Login: React.FC = () => {
 							<CardContent className="flex flex-col gap-2">
 								<div>
 									<Label htmlFor="email">Email</Label>
-									<Input id="email" placeholder="Enter your email" />
+									<Input name="email" id="email" placeholder="Enter your email" />
 								</div>
 								<div>
 									<Label htmlFor="password">Password</Label>
-									<Input id="password" type="password" placeholder="Enter your password" />
+									<Input name="password" id="password" type="password" placeholder="Enter your password" />
 								</div>
 								<Button type="submit">Submit</Button>
 							</CardContent>

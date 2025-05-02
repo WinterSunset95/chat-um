@@ -27,10 +27,10 @@ export default function Nav({ chatId }: { chatId?: string }) {
 				<Moon className="absolute rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
 			</Button>
 
-			{user && user.displayName ?
+			{user ?
 			<Button asChild>
 				<Link href="/profile">
-					<h1>{user.displayName}</h1>
+					<h1>{user.displayName ? user.displayName : user.email}</h1>
 				</Link>
 			</Button>
 			:

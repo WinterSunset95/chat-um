@@ -6,9 +6,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { app } from "@/lib/firebase";
-import { connectAuthEmulator, getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithPopup } from "firebase/auth";
+import { connectAuthEmulator, createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { useRouter } from "next/navigation";
-import React, { useEffect } from "react";
+import React, { FormEvent, useEffect } from "react";
 
 const SignUp: React.FC = () => {
 
@@ -18,7 +18,27 @@ const SignUp: React.FC = () => {
 
 	const router = useRouter();
 
-	const emailSignIn = async () => {
+	const formSubmit = async (e: FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		const formData = new FormData(e.currentTarget);
+
+		const email = formData.get("email") as string;
+		const password = formData.get("password") as string;
+		const confirm = formData.get("confirm") as string;
+
+		if (password !== confirm) {
+			alert("Passwords do not match");
+			return;
+		}
+
+		let result = await createUserWithEmailAndPassword(auth, email, password);
+
+		if (result.user) {
+			alert("Sign in successful");
+		} else {
+			alert("Sign in failed");
+		}
+
 	}
 
 	const popUpSignin = async () => {
@@ -42,7 +62,7 @@ const SignUp: React.FC = () => {
 
 	return (
 		<main className="w-full max-w-96">
-			<form className="w-full">
+			<form className="w-full" onSubmit={formSubmit}>
 				<Card>
 					<CardHeader>
 						<CardTitle>Create an account for Chat UM</CardTitle>
@@ -50,20 +70,16 @@ const SignUp: React.FC = () => {
 					</CardHeader>
 					<CardContent className="flex flex-col gap-2">
 						<div>
-							<Label htmlFor="fullname">Full Name</Label>
-							<Input id="fullname" placeholder="Enter your full name" />
-						</div>
-						<div>
 							<Label htmlFor="email">Email</Label>
-							<Input id="email" placeholder="Enter your email" />
+							<Input name="email" id="email" placeholder="Enter your email" required/>
 						</div>
 						<div>
 							<Label htmlFor="password">Password</Label>
-							<Input id="password" type="password" placeholder="Enter your password" />
+							<Input name="password" id="password" type="password" placeholder="Enter your password" required/>
 						</div>
 						<div>
 							<Label htmlFor="confirm">Confirm Password</Label>
-							<Input id="confirm" type="password" placeholder="Enter your password" />
+							<Input name="confirm" id="confirm" type="password" placeholder="Enter your password" required/>
 						</div>
 						<Button type="submit">Submit</Button>
 					</CardContent>
