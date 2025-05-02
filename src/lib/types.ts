@@ -1,18 +1,7 @@
-
-// User Profile
-type User = {
-	uid: string;
-	displayName: string;
-	photoURL?: string;
-	email?: string;
-	phoneNumber?: string;
-	status?: 'online' | 'offline' | 'away';
-	createdAt: number;
-	updatedAt: number;
-}
+import { User } from "firebase/auth";
 
 // Message (In chat room or DM)
-type Message = {
+export type Message = {
 	id: string;
 	senderId: string;
 	senderName: string;
@@ -23,7 +12,7 @@ type Message = {
 }
 
 // Public room chat
-type Room = {
+export type Room = {
 	id: string;
 	name: string;
 	description?: string;
@@ -35,7 +24,7 @@ type Room = {
 };
 
 // DM Thread
-type DM = {
+export type DM = {
 	id: string;
 	members: User[];
 	lastMessage: Message;
@@ -44,7 +33,7 @@ type DM = {
 };
 
 // Presence
-type Presence = {
+export type Presence = {
 	userId: string;
 	lastSeen: number;
 	isOnline: boolean;

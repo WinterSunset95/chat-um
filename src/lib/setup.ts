@@ -44,16 +44,5 @@ export const checkIfUserExistsOnDatabase = async (auth: Auth, db: Firestore) => 
 		return true;
 	}
 
-	const user: User = {
-		uid: auth.currentUser.uid as string,
-		displayName: auth.currentUser.displayName as string,
-		photoURL: auth.currentUser.photoURL as string,
-		email: auth.currentUser.email as string,
-		phoneNumber: auth.currentUser.phoneNumber as string,
-		status: 'online',
-		createdAt: Date.now(),
-		updatedAt: Date.now(),
-	}
-
-	setDoc(docRef, user, { merge: true });
+	return false;
 }

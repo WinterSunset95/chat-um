@@ -24,23 +24,21 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased w-screen h-screen flex justify-center items-center bg-background`}
-      >
-	  <AuthProvider>
-		<ThemeProvider
-			attribute="class"
-			defaultTheme="system"
-			enableSystem
-		>
-			<div className="h-full w-full max-w-[1200px] flex justify-center items-center">
-				{children}
-			</div>
-		</ThemeProvider>
-	  </AuthProvider>
-      </body>
-    </html>
-  );
+	return (
+		<html lang="en">
+			<body className={`${geistSans.variable} ${geistMono.variable} antialiased w-screen h-screen flex justify-center items-center bg-background`} >
+				<AuthProvider>
+					<ThemeProvider
+						attribute="class"
+						defaultTheme="system"
+						enableSystem
+					>
+						<div className="h-full w-full max-w-[1200px] flex justify-center items-center">
+							{children}
+						</div>
+					</ThemeProvider>
+				</AuthProvider>
+			</body>
+		</html>
+	);
 }

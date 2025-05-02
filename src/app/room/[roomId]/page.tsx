@@ -2,49 +2,43 @@
 import { useAuth } from "@/components/AuthProvider";
 import DirectMessage from "@/components/DirectMessage";
 import { app } from "@/lib/firebase";
-import { User } from "firebase/auth";
+import { type Room } from "@/lib/types";
 import { collection, doc, getDoc, getFirestore } from "firebase/firestore";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
-export default function Chat () {
-	const [them, setThem] = useState<User | null>(null);
-	const { userId } = useParams();
+export default function Room () {
 	const me = useAuth();
+	const { roomId } = useParams();
 	const db = getFirestore(app);
+	const [room, setRoom] = useState<Room | null>(null);
 
 	useEffect(() => {
-		if (!userId) {
+		if (!roomId) {
 			return;
 		}
-		const usersCollection = collection(db, "tenants", "chat-um-bhulo", "users");
-		const docRef = doc(usersCollection, userId as string);
+
+		const roomsCollection = collection(db, "tenants", "chat-um-bhulo", "rooms");
+		const docRef = doc(roomsCollection, roomId as string);
 		getDoc(docRef)
 		.then((docSnap) => {
 			if (docSnap.exists()) {
-				setThem(docSnap.data() as User);
+				setRoom(docSnap.data() as Room);
 			}
 		})
 		.catch((error) => {
 			console.log("Error getting document:", error);
-		});
-	}, [userId]);
+		})
+	}, [roomId]);
 
-	if (!userId) {
-		return (
-			<div>404</div>
-		)
-	}
-
-	if (!them || !me) {
+	if (!room || !me) {
 		return (
 			<div>Loading</div>
 		)
 	}
 
-
 	return (
-		<DirectMessage me={me} them={them} />
+		<DirectMessage me={me} room={room} />
 	)
 }
 

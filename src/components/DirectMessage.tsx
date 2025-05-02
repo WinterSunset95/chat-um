@@ -9,55 +9,27 @@ import { Button } from "./ui/button";
 import { generateCombinedUid } from "@/lib/helpers";
 import DmNav from "./DmNav";
 import { useAuth } from "./AuthProvider";
+import { Message, Room } from "@/lib/types";
 
+// userId here is either the usersId or the roomId
+// If "room" exists, this component is being called from the rooms page
 export default function DirectMessage({
-	userId,
+	me,
+	them,
+	room
 }: {
-	userId: string,
+	me: User,
+	them?: User,
+	room?: Room
 }) {
-
-	const auth = getAuth(app);
-	const myUser = useAuth();
 	const db = getFirestore(app);
-	const router = useRouter();
+	let convoId = room ? room.id : generateCombinedUid(me.uid as string, them.uid as string);
 
-	const [user, setUser] = useState<User | null>(null);
 	const [messages, setMessages] = useState<Message[]>([]);
 	const [text, setText] = useState<string>("");
 
 	useEffect(() => {
-		const tenantId = auth.tenantId;
-		if (!myUser || !tenantId) {
-			router.replace("/login");
-			return;
-		}
-
-		console.log(tenantId, myUser.displayName);
-		const usersCollection = collection(db, "tenants", auth.tenantId as string, "users");
-		const userRef = doc(usersCollection, userId);
-
-		getDoc(userRef)
-		.then((docSnap) => {
-			if (docSnap.exists()) {
-				setUser(docSnap.data() as User);
-			} else {
-				throw new Error("User not found");
-			}
-		})
-		.catch((error) => {
-			alert(error.message);
-		})
-	}, [])
-
-	useEffect(() => {
-		if (!myUser || !user) {
-			return;
-		}
-
-		const convoId = generateCombinedUid(myUser?.uid as string, user?.uid as string);
-
-		const messagesCollection = collection(db, "tenants", auth.tenantId as string, "messages", convoId, "conversation");
-
+		const messagesCollection = collection(db, "tenants", me.tenantId as string, "messages", convoId, "conversation");
 		getDocs(messagesCollection)
 		.then((snapshot) => {
 			setMessages([]);
@@ -98,18 +70,16 @@ export default function DirectMessage({
 		return () => {
 			unsub();
 		}
-
-	}, [myUser, user])
+	}, [])
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		const convoId = generateCombinedUid(myUser?.uid as string, user?.uid as string);
 
-		const messagesCollection = collection(db, "tenants", auth.tenantId as string, "messages", convoId, "conversation");
+		const messagesCollection = collection(db, "tenants", me.tenantId as string, "messages", convoId, "conversation");
 
 		addDoc(messagesCollection, {
-			senderId: myUser?.uid as string,
-			senderName: myUser?.displayName as string,
+			senderId: me.uid as string,
+			senderName: me.displayName as string,
 			content: text,
 			timestamp: Date.now(),
 			type: "text",
@@ -122,13 +92,9 @@ export default function DirectMessage({
 		})
 	}
 
-	if (!myUser || !user) {
-		return <div>Loading...</div>
-	}
-
 	return (
 		<div className="h-full max-h-dvh w-full flex flex-col p-2">
-			<DmNav them={user} />
+			<DmNav them={them} room={room} />
 			<div className="w-full flex-1 overflow-auto grid grid-cols-1 grid-rows-12 gap-2">
 				<ul className="col-span-1 row-span-11 flex flex-col-reverse overflow-y-scroll gap-4">
 					{messages.map((message) => (
@@ -136,8 +102,8 @@ export default function DirectMessage({
 							className={`p-2
 								rounded-sm
 								max-w-[80%]
-								${message.senderId === myUser.uid ? "self-end" : "self-start"}
-								${message.senderId === myUser.uid ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"}
+								${message.senderId === me.uid ? "self-end" : "self-start"}
+								${message.senderId === me.uid ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"}
 							`}
 						>
 							<p className="font-bold text-xl">{message.senderName}</p>

@@ -6,9 +6,9 @@ import { Avatar, AvatarImage } from "./ui/avatar";
 import { useAuth } from "./AuthProvider";
 import { User } from "firebase/auth";
 import Link from "next/link";
+import { Room } from "@/lib/types";
 
-export default function DmNav({ them }: { them: User }) {
-
+export default function DmNav({ them, room }: { them?: User, room?: Room }) {
 	const me = useAuth();
 	const theme = useTheme();
 
@@ -16,9 +16,9 @@ export default function DmNav({ them }: { them: User }) {
 		<nav className="p-2 flex flex-row justify-between gap-2 items-center">
 			<div className="flex flex-row gap-2 grow items-center">
 				<Avatar>
-					<AvatarImage src={them.photoURL ? them.photoURL : "https://picsum.photos/200"} />
+					<AvatarImage src={room ? me.photoURL : them.photoURL ? them.photoURL : "https://picsum.photos/200"} />
 				</Avatar>
-				<h1>{them.displayName}</h1>
+				<h1>{them ? them.displayName : room.name}</h1>
 			</div>
 
 			<Button onClick={() => {
