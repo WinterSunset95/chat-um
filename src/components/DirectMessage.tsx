@@ -8,6 +8,7 @@ import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { generateCombinedUid } from "@/lib/helpers";
 import DmNav from "./DmNav";
+import { useAuth } from "./AuthProvider";
 
 export default function DirectMessage({
 	userId,
@@ -16,37 +17,24 @@ export default function DirectMessage({
 }) {
 
 	const auth = getAuth(app);
+	const myUser = useAuth();
 	const db = getFirestore(app);
 	const router = useRouter();
 
-	const [myUser, setMyUser] = useState<User | null>(null);
 	const [user, setUser] = useState<User | null>(null);
 	const [messages, setMessages] = useState<Message[]>([]);
 	const [text, setText] = useState<string>("");
 
 	useEffect(() => {
 		const tenantId = auth.tenantId;
-		if (!auth.currentUser || !tenantId) {
+		if (!myUser || !tenantId) {
 			router.replace("/login");
 			return;
 		}
 
-		console.log(tenantId, auth.currentUser.displayName);
+		console.log(tenantId, myUser.displayName);
 		const usersCollection = collection(db, "tenants", auth.tenantId as string, "users");
-		const myUserRef = doc(usersCollection, auth.currentUser.uid as string);
 		const userRef = doc(usersCollection, userId);
-
-		getDoc(myUserRef)
-		.then((docSnap) => {
-			if (docSnap.exists()) {
-				setMyUser(docSnap.data() as User);
-			} else {
-				throw new Error("User not found");
-			}
-		})
-		.catch((error) => {
-			alert(error.message);
-		})
 
 		getDoc(userRef)
 		.then((docSnap) => {
@@ -68,7 +56,6 @@ export default function DirectMessage({
 
 		const convoId = generateCombinedUid(myUser?.uid as string, user?.uid as string);
 
-		const messagesDocRef = doc(db, "tenants", auth.tenantId as string, "messages", convoId);
 		const messagesCollection = collection(db, "tenants", auth.tenantId as string, "messages", convoId, "conversation");
 
 		getDocs(messagesCollection)

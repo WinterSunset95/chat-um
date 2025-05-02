@@ -3,9 +3,11 @@ import { useTheme } from "next-themes";
 import { Button } from "./ui/button";
 import { Link, Moon, Sun } from "lucide-react";
 import { Avatar, AvatarImage } from "./ui/avatar";
+import { useAuth } from "./AuthProvider";
 
-export default function DmNav({ me, them }: { me: User, them: User }) {
+export default function DmNav({ them }: { them: User }) {
 
+	const me = useAuth();
 	const theme = useTheme();
 
 	return (

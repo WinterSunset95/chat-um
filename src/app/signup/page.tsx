@@ -1,4 +1,5 @@
 'use client'
+import { useAuth } from "@/components/AuthProvider";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -12,8 +13,8 @@ import React, { useEffect } from "react";
 const SignUp: React.FC = () => {
 
 	const auth = getAuth(app);
-	auth.tenantId = "chat-um-bhulo";
 	const provider = new GoogleAuthProvider();
+	const user = useAuth();
 
 	const router = useRouter();
 
@@ -34,17 +35,10 @@ const SignUp: React.FC = () => {
 		}
 	}
 
-	useEffect(() => {
-		if (auth.currentUser) {
-			alert("You are already signed in");
-			router.replace("/");
-		}
-		onAuthStateChanged(auth, (user) => {
-			if (user) {
-				router.replace("/");
-			}
-		})
-	}, [])
+	if (user && user.uid) {
+		alert("You are already signed in");
+		router.replace("/");
+	}
 
 	return (
 		<main className="w-full max-w-96">

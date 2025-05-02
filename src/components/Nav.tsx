@@ -8,20 +8,13 @@ import { useEffect } from "react";
 import { checkFirestore, checkIfUserExistsOnDatabase } from "@/lib/setup";
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
+import { useAuth } from "./AuthProvider";
 
 export default function Nav({ chatId }: { chatId?: string }) {
 
-	const auth = getAuth(app);
-	const db = getFirestore(app);
+	const user = useAuth();
 
 	const theme = useTheme();
-
-	useEffect(() => {
-		checkFirestore(auth, db);
-		onAuthStateChanged(auth, (user) => {
-			checkIfUserExistsOnDatabase(auth, db);
-		})
-	}, [])
 
 	return (
 		<nav className="p-2 flex flex-row justify-between gap-2">
@@ -34,10 +27,10 @@ export default function Nav({ chatId }: { chatId?: string }) {
 				<Moon className="absolute rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
 			</Button>
 
-			{auth && auth.currentUser ?
+			{user && user.displayName ?
 			<Button asChild>
 				<Link href="/profile">
-					<h1>{auth.currentUser.displayName}</h1>
+					<h1>{user.displayName}</h1>
 				</Link>
 			</Button>
 			:

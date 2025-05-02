@@ -20,8 +20,9 @@ const firebaseConfig = {
 
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);
+getAuth(app).tenantId = "chat-um-bhulo";
 if (process.env.NODE_ENV === "development") {
-	connectAuthEmulator(getAuth(app), "http://localhost:9099");
-	connectFirestoreEmulator(getFirestore(app), "localhost", 8080);
+	//connectAuthEmulator(getAuth(app), "http://localhost:9099");
+	//connectFirestoreEmulator(getFirestore(app), "localhost", 8080);
 }
 //export const analytics = getAnalytics(app);
