@@ -13,14 +13,16 @@ import { useRouter } from "next/navigation";
 import { FormEvent } from "react";
 
 const Profile: React.FC = () => {
-
 	const auth = getAuth(app);
 	const router = useRouter();
 	const user = useAuth();
 	const db = getFirestore(app);
 
+	if (!auth.currentUser) {
+		router.push("/login");
+	}
+
 	if (!user) {
-		router.replace("/login");
 		return (
 			<div>Loading . . .</div>
 		)

@@ -18,9 +18,12 @@ export default function HomePage() {
 	const db = getFirestore(app);
 
 	const [usersList, setUsersList] = useState<User[]>([]);
+	const [usersListOriginal, setUsersListOriginal] = useState<User[]>([]);
 	const [rooms, setRooms] = useState<Room[]>([]);
+	const [roomsOriginal, setRoomsOriginal] = useState<Room[]>([]);
 	const [roomName, setRoomName] = useState<string>("");
 	const [roomDesc, setRoomDesc] = useState<string>("");
+	const [search, setSearch] = useState<string>("");
 	const user = useAuth();
 
 	useEffect(() => {
@@ -31,6 +34,7 @@ export default function HomePage() {
 			setUsersList([]);
 			snapshot.forEach((doc) => {
 				setUsersList((prev) => [...prev, doc.data() as User]);
+				setUsersListOriginal((prev) => [...prev, doc.data() as User]);
 			})
 		})
 		getDocs(roomsCollection)
@@ -38,6 +42,7 @@ export default function HomePage() {
 			setRooms([]);
 			snapshot.forEach((doc) => {
 				setRooms((prev) => [...prev, doc.data() as Room]);
+				setRoomsOriginal((prev) => [...prev, doc.data() as Room]);
 			})
 		})
 
@@ -64,13 +69,20 @@ export default function HomePage() {
 		}
 	}, [])
 
-	if (!user) {
-		return (
-			<div>loading...</div>
-		)
-	}
+	useEffect(() => {
+		// Filter rooms and usersList based on search
+		const filteredRooms = roomsOriginal.filter((room) => room.name.toLowerCase().includes(search.toLowerCase()));
+		const filteredUsers = usersListOriginal.filter((user) => user.displayName.toLowerCase().includes(search.toLowerCase()));
+		setRooms(filteredRooms);
+		setUsersList(filteredUsers);
+	}, [search]);
 
 	const roomCreate = () => {
+		if (!user) {
+			alert("Please login to create a room");
+			return
+		}
+
 		if (roomName === "" || roomDesc === "") {
 			alert("Please enter a room name and description");
 			return;
@@ -117,7 +129,7 @@ export default function HomePage() {
 	return (
 		<main className="flex flex-col gap-2 w-full flex-1 overflow-auto">
 			<div className="flex flex-row justify-center items-center p-1 gap-1 border border-primary rounded-md">
-				<input type="text" placeholder="Search" className="bg-transparent border-0 w-full p-1"/>
+				<input type="text" placeholder="Search" value={search} onChange={(e) => setSearch(e.target.value)} className="bg-transparent border-0 w-full p-1"/>
 				<SearchIcon />
 			</div>
 			<Tabs defaultValue="users" className="w-full flex-1 overflow-auto flex flex-col">
