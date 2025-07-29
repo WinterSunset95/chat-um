@@ -1,7 +1,7 @@
 # Chat Application @ Unified Mentor
 
 ## Demo
-https://winter-f3cb5.web.app
+[https://winter-f3cb5.web.app](https://winter-f3cb5.web.app)
 
 ## Overview
 This project is a realtime chat application, built to serve as a reusable template for messaging-based applications.
